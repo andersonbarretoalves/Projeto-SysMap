@@ -33,3 +33,8 @@ Anderson Alves
   width="50%">
 
 ### 2º Criação de Um repositório GitHub com um arquivo Readme.md para a Documentação do projeto e versionamento.
+
+<img 
+  src="./imagens/imagemDoGitHub.png" 
+  alt="Print da Org" 
+  width="50%">
