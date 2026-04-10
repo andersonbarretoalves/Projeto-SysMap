@@ -49,7 +49,7 @@
 - Apartir da criação do Documento foi solicitado ao ChatGPT a criação de um Checklist Interativo do Projeto.
 
 <img 
-  src="./imagens/CheckListInterativo.png" 
+  src="./imagens/ChecklistInterativo.png" 
   alt="Print da Cheklist Interativo" 
   width="80%">
 
@@ -295,7 +295,7 @@ private class ReceitaWSServiceTest {
 * Execução do teste 100%.
 
 <img 
-  src="./imagens/testeDeveloperConsole/teste.png" 
+  src="./imagens/testeDeveloperConsole/teste.PNG" 
   alt="Print do teste no Developer Consoler" 
   width="80%">
 
