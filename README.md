@@ -296,6 +296,6 @@ private class ReceitaWSServiceTest {
 
 <img 
   src="./imagens/testeDeveloperConsole/teste.png" 
-  alt="Print da Cheklist Interativo" 
+  alt="Print do teste no Developer Consoler" 
   width="80%">
 
