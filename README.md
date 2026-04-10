@@ -99,16 +99,13 @@
   2- sfdx auth:web:login -a andersonbarretodev@resourceful-badger-s0xeok.com
   - comando utilizado para conectar a IDE com a ORG.
 
-  3- sfdx force:project:create -n CadastroDeClientes
+  3- sfdx force:project:create -n Projeto-SysMap
   - comando utilizado para criação do projeto na IDE.
 
-  4- cd CadastroDeClientes
-  - Comando para entrar na pasta do projeto.
-
-  5- sfdx config:set defaultusername=andersonbarretodev@resourceful-badger-s0xeok.com
+  4- sfdx config:set defaultusername=andersonbarretodev@resourceful-badger-s0xeok.com
   - Definir sua org como padrão.
 
-  6- sfdx force:org:list
+  5- sfdx force:org:list
   - Verificar se o projeto está como Padão.
 
   <img 
@@ -116,7 +113,7 @@
   alt="Print da Org" 
   width="48%">
 
-  7- sf org login web --alias andersonbarretodev@resourceful-badger-s0xeok.com --set-default
+  6- sf org login web --alias andersonbarretodev@resourceful-badger-s0xeok.com --set-default
   - Login já como padrão.
 
   <img 
@@ -124,5 +121,78 @@
   alt="Print da Org" 
   width="48%">
 
-  8- sf org open
+  7- sf org open
   - Abrir a Org pela IDE
+
+### **8º Criando a Classe Apex Callout**
+
+- Após criar o código, utilizei o ChatGPT para comentá-lo e sugerir melhorias, que foram aplicadas na versão final.
+
+💡 O que foi melhorado nessa versão
+
+    ✔ Comentários em todas as etapas
+
+    ✔ Tratamento de erro com try/catch
+
+    ✔ Timeout configurado
+
+    ✔ Mensagens mais claras
+
+    ✔ Código mais seguro
+
+
+```
+public with sharing class ReceitaWSService {
+
+    // @AuraEnabled permite que esse método seja chamado por LWC ou Aura
+    @AuraEnabled
+    public static Map<String, Object> buscarCNPJ(String cnpj) {
+
+        // Cria o objeto responsável por enviar requisições HTTP
+        Http http = new Http();
+
+        // Cria o objeto de requisição (onde configuramos URL, método, etc.)
+        HttpRequest req = new HttpRequest();
+
+        // Define o endpoint da API (URL)
+        // Aqui concatenamos o CNPJ informado na URL
+        req.setEndpoint('https://www.receitaws.com.br/v1/cnpj/' + cnpj);
+
+        // Define o método HTTP (GET = buscar dados)
+        req.setMethod('GET');
+
+        // (Opcional) Define um tempo máximo de espera (em milissegundos)
+        // Boa prática para evitar travamentos
+        req.setTimeout(5000);
+
+        try {
+            // Envia a requisição e recebe a resposta da API
+            HttpResponse res = http.send(req);
+
+            // Verifica se a resposta foi bem-sucedida (HTTP 200)
+            if (res.getStatusCode() == 200) {
+
+                // Converte o JSON (string) em um Map<String, Object>
+                // deserializeUntyped permite trabalhar com JSON dinâmico
+                return (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+
+            } else {
+
+                // Caso a API retorne erro (ex: 400, 404, 500)
+                // Lança um erro tratado para o front (LWC/Aura)
+                throw new AuraHandledException(
+                    'Erro ao consultar CNPJ. Status: ' + res.getStatusCode()
+                );
+            }
+
+        } catch (Exception e) {
+
+            // Captura qualquer erro (timeout, falha de conexão, etc.)
+            // e envia uma mensagem amigável para o usuário
+            throw new AuraHandledException(
+                'Erro na integração com a ReceitaWS: ' + e.getMessage()
+            );
+        }
+    }
+}
+```
