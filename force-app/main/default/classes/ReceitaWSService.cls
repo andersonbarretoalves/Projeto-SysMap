@@ -1,52 +1,47 @@
 public with sharing class ReceitaWSService {
 
-    // @AuraEnabled permite que esse método seja chamado por LWC ou Aura
-    @AuraEnabled
+    @AuraEnabled(cacheable=false)
     public static Map<String, Object> buscarCNPJ(String cnpj) {
+        // Limpa o CNPJ (remove caracteres não numéricos)
+        if (String.isBlank(cnpj)) {
+            throw createAuraException('O CNPJ não pode estar vazio.');
+        }
+        
+        String cleanCnpj = cnpj.replaceAll('[^0-9]', '');
 
-        // Cria o objeto responsável por enviar requisições HTTP
         Http http = new Http();
-
-        // Cria o objeto de requisição (onde configuramos URL, método, etc.)
         HttpRequest req = new HttpRequest();
-
-        // Define o endpoint da API (URL)
-        // Aqui concatenamos o CNPJ informado na URL
-        req.setEndpoint('https://www.receitaws.com.br/v1/cnpj/' + cnpj);
-
-        // Define o método HTTP (GET = buscar dados)
+        req.setEndpoint('https://www.receitaws.com.br/v1/cnpj/' + cleanCnpj);
         req.setMethod('GET');
-
-        // (Opcional) Define um tempo máximo de espera (em milissegundos)
-        req.setTimeout(5000);
+        req.setTimeout(120000); // Aumentado para o limite do Apex se necessário
 
         try {
-            // Envia a requisição e recebe a resposta da API
             HttpResponse res = http.send(req);
 
-            // Verifica se a resposta foi bem-sucedida (HTTP 200)
-            if (res.getStatusCode() == 200) {
-
-                // Converte o JSON (string) em um Map<String, Object>
-                // deserializeUntyped permite trabalhar com JSON dinâmico
-                return (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
-
-            } else {
-
-                // Caso a API retorne erro (ex: 400, 404, 500)
-                // Lança um erro tratado para o front (LWC/Aura)
-                throw new AuraHandledException(
-                    'Erro ao consultar CNPJ. Status: ' + res.getStatusCode()
-                );
+            if (res.getStatusCode() != 200) {
+                throw createAuraException('Erro na API ReceitaWS. Status: ' + res.getStatusCode() + ' - ' + res.getStatus());
             }
 
-        } catch (Exception e) {
+            Map<String, Object> result = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            
+            // A API do ReceitaWS retorna status: "ERROR" dentro do JSON em alguns casos (ex: CNPJ inválido)
+            if (result.get('status') == 'ERROR') {
+                throw createAuraException('API Error: ' + (String)result.get('message'));
+            }
 
-            // Captura qualquer erro (timeout, falha de conexão, etc.)
-            // e envia uma mensagem amigável para o usuário
-            throw new AuraHandledException(
-                'Erro na integração com a ReceitaWS: ' + e.getMessage()
-            );
+            return result;
+
+        } catch (AuraHandledException e) {
+            throw e;
+        } catch (Exception e) {
+            throw createAuraException('Erro inesperado na integração: ' + e.getMessage());
         }
+    }
+
+    // Helper para garantir que a mensagem chegue ao front-end
+    private static AuraHandledException createAuraException(String message) {
+        AuraHandledException e = new AuraHandledException(message);
+        e.setMessage(message); // Necessário para testes e exibição correta
+        return e;
     }
 }
