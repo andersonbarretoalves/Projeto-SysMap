@@ -1,47 +1,82 @@
 public with sharing class ReceitaWSService {
 
+    // 🔹 MÉTODO ORIGINAL (mantém para LWC)
     @AuraEnabled(cacheable=false)
     public static Map<String, Object> buscarCNPJ(String cnpj) {
-        // Limpa o CNPJ (remove caracteres não numéricos)
         if (String.isBlank(cnpj)) {
             throw createAuraException('O CNPJ não pode estar vazio.');
         }
-        
+
         String cleanCnpj = cnpj.replaceAll('[^0-9]', '');
 
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint('https://www.receitaws.com.br/v1/cnpj/' + cleanCnpj);
         req.setMethod('GET');
-        req.setTimeout(120000); // Aumentado para o limite do Apex se necessário
+        req.setTimeout(120000);
 
         try {
             HttpResponse res = http.send(req);
 
             if (res.getStatusCode() != 200) {
-                throw createAuraException('Erro na API ReceitaWS. Status: ' + res.getStatusCode() + ' - ' + res.getStatus());
+                throw createAuraException('Erro na API ReceitaWS.');
             }
 
             Map<String, Object> result = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
-            
-            // A API do ReceitaWS retorna status: "ERROR" dentro do JSON em alguns casos (ex: CNPJ inválido)
+
             if (result.get('status') == 'ERROR') {
-                throw createAuraException('API Error: ' + (String)result.get('message'));
+                throw createAuraException((String) result.get('message'));
             }
 
             return result;
 
-        } catch (AuraHandledException e) {
-            throw e;
         } catch (Exception e) {
-            throw createAuraException('Erro inesperado na integração: ' + e.getMessage());
+            throw createAuraException(e.getMessage());
         }
     }
 
-    // Helper para garantir que a mensagem chegue ao front-end
+    // 🔥 MÉTODO PARA FLOW (NOVO)
+    @InvocableMethod(label='Buscar CNPJ')
+    public static List<RetornoCNPJ> buscarCNPJFlow(List<InputCNPJ> inputs) {
+
+        List<RetornoCNPJ> lista = new List<RetornoCNPJ>();
+
+        for (InputCNPJ input : inputs) {
+
+            Map<String, Object> result = buscarCNPJ(input.cnpj);
+
+            RetornoCNPJ r = new RetornoCNPJ();
+            r.nome = (String) result.get('nome');
+            r.cidade = (String) result.get('municipio');
+            r.uf = (String) result.get('uf');
+
+            lista.add(r);
+        }
+
+        return lista;
+    }
+
+    // 🔹 INPUT (Flow)
+    public class InputCNPJ {
+        @InvocableVariable(required=true)
+        public String cnpj;
+    }
+
+    // 🔹 OUTPUT (Flow)
+    public class RetornoCNPJ {
+        @InvocableVariable
+        public String nome;
+
+        @InvocableVariable
+        public String cidade;
+
+        @InvocableVariable
+        public String uf;
+    }
+
     private static AuraHandledException createAuraException(String message) {
         AuraHandledException e = new AuraHandledException(message);
-        e.setMessage(message); // Necessário para testes e exibição correta
+        e.setMessage(message);
         return e;
     }
 }
