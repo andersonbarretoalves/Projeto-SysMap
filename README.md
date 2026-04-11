@@ -46,7 +46,7 @@
 
 - Separado as informações sobre LWC, Flow e Apex para a execução do projeto.
 
-- Apartir da criação do Documento foi solicitado ao ChatGPT a criação de um Checklist Interativo do Projeto.
+- Depois de criar um resumo das informações foi solicitado ao ChatGPT a criação de um Checklist Interativo do Projeto.
 
 <img 
   src="./imagens/ChecklistInterativo.png" 
@@ -69,12 +69,24 @@
     alt="Print da permissão no objeto conta" 
     width="79%">
 
+  <img 
+    src="./imagens/perfilPermission/permissionSetsConta.png" 
+    alt="Print da permissão no objeto conta" 
+    width="79%">  
+
+
+
 - Permissão no Objeto Contato.
 
   <img 
     src="./imagens/perfilPermission/permissionObjetoContact.png" 
     alt="Print da permissão no objeto contato" 
     width="79%">
+
+  <img 
+    src="./imagens/perfilPermission/permissionSetsContacts.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">  
 
 ### **5º Restringir acesso ao processo de cadastro.**
 
@@ -298,4 +310,69 @@ private class ReceitaWSServiceTest {
   src="./imagens/testeDeveloperConsole/teste.PNG" 
   alt="Print do teste no Developer Consoler" 
   width="80%">
+
+### **11º Criação do Flow.**
+   
+* Tela do Flow:
+
+    <img 
+    src="./imagens/Flow/telaDoFlow.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela do Screen:
+
+    <img 
+    src="./imagens/Flow/telaScreen.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela Action - Buscar CNPJ:
+
+    <img 
+    src="./imagens/Flow/buscarCNPJ.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela Toolbox:
+
+    <img 
+    src="./imagens/Flow/telaToolbox.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Print da 1º tela do Flow com o usuário Representante de Vedas:
+
+    <img 
+    src="./imagens/Flow/testUser.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Print da 2º tela do Flow com o usuário Representante de Vedas:
+
+    <img 
+    src="./imagens/Flow/revisarDadosCliente.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tepa do 1º tratamento de erro no Elemento Action "Buscar CNPJ":
+
+    <img 
+    src="./imagens/Flow/primeiroTratamentoDeErro.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tepa do 2º tratamento de erro no Elemento Create Records "Criar Conta":
+
+    <img 
+    src="./imagens/Flow/segundoTratamentoDeErro.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela de Mensagem - Conta criada com sucesso!:
+
+    <img 
+    src="./imagens/Flow/mensagemSucesso.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
 

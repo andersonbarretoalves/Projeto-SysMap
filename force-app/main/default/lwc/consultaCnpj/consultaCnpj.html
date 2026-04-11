@@ -1,0 +1,74 @@
+<template>
+    <lightning-card title="Consulta de CNPJ">
+
+        <div class="slds-p-around_medium">
+
+            <!-- CNPJ -->
+            <lightning-input 
+                label="CNPJ"
+                value={cnpj}
+                onchange={handleCnpj}
+                data-field="cnpj">
+            </lightning-input>
+
+            <lightning-button
+                label="Buscar"
+                variant="brand"
+                onclick={buscar}
+                data-field="buscar">
+            </lightning-button>
+
+            <br /><br />
+
+            <!-- Dados -->
+            <lightning-input
+                label="Nome"
+                value={nome}
+                onchange={handleChange}
+                data-field="nome">
+            </lightning-input>
+            
+            <lightning-input 
+                label="Logradouro"
+                value={logradouro}
+                onchange={handleChange}
+                data-field="logradouro">
+            </lightning-input>
+            
+            <lightning-input 
+                label="Cidade"
+                value={cidade}
+                onchange={handleChange}
+                data-field="cidade">
+            </lightning-input>
+
+            <lightning-input
+                label="Estado"
+                value={uf}
+                onchange={handleChange}
+                data-field="uf">
+            </lightning-input>
+
+            <lightning-input
+            label="CEP"
+            value={cep}
+            onchange={handleChange}
+            data-field="cep">
+        </lightning-input>
+
+        <lightning-input
+            label="Telefone"
+            value={telefone}
+            onchange={handleChange}
+            data-field="telefone">
+        </lightning-input>
+
+            <br />
+
+            <lightning-button label="Salvar Conta" variant="success" onclick={salvar}>
+            </lightning-button>
+
+        </div>
+
+    </lightning-card>
+</template>
