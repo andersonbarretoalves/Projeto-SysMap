@@ -83,7 +83,7 @@
 
   <img 
     src="./imagens/perfilPermission/permissionSetsContacts.png" 
-    alt="Print da permissão no objeto contato no Permission Sets" 
+    alt="Imagem da permissão no objeto contato no Permission Sets" 
     width="79%">
 
 - Restrição de Acesso a objetos desnecessários.
@@ -92,28 +92,28 @@
 
         <img 
             src="./imagens/acessoRestrito/oportunidade.png" 
-            alt="Restrição de acesso a oportunidade" 
+            alt="Imagem da Restrição de acesso a oportunidade" 
             width="78%">
 
     * Lead
 
         <img 
             src="./imagens/acessoRestrito/leads.png" 
-            alt="Restrição de acesso a Leads" 
+            alt="Imagem da Restrição de acesso a Leads" 
             width="78%">
 
     * Case
 
         <img 
             src="./imagens/acessoRestrito/case.png" 
-            alt="Restrição de acesso a Cases" 
+            alt="Imagem daRestrição de acesso a Cases" 
             width="78%">
 
     * Campaign
 
         <img 
             src="./imagens/acessoRestrito/campaign.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem da Restrição de acesso a Campaign" 
             width="78%">
 
 ### **5º Compartilhamento.**
@@ -124,37 +124,37 @@
 
         <img 
             src="./imagens/sharingRules/accountAndContact.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem da Configuração de acesso Privado em Accout and Contact" 
             width="78%">
 
-    * Configuração do Account Sharing Rules
+    * Configuração em Account Sharing Rules.
 
         <img 
             src="./imagens/sharingRules/accountSharingRules.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem da configuração em Account Sharing Rules" 
             width="78%">
 
-    * Configuração do Role no Usuário Represetante de Vendas
+    * Configuração do Role no Usuário Represetante de Vendas.
 
         <img 
             src="./imagens/sharingRules/userRoles.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem da configuração no item Role no perfil Representante de Vendas" 
             width="78%">
 
-    * Teste de acesso do Representante de Vedas no Flow
+    * Teste de acesso do Representante de Vedas no Flow.
 
         <img 
             src="./imagens/sharingRules/testeRepresentanteVedas.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem do teste com o usuário Representante de Vendas no Flow" 
             width="78%">
 
-    * Teste de Conta sem acesso
+    * Teste de Conta sem acesso usando o Flow.
 
         <img 
             src="./imagens/sharingRules/testeContaSemAcesso.png" 
-            alt="Restrição de acesso a Campaign" 
+            alt="Imagem com usuário sem acesso pelo Flow" 
             width="78%">
-            
+
 
 ### **6º Liberar API (ReceitaWS)**
 
@@ -163,7 +163,7 @@
 
   <img 
     src="./imagens/remoteSiteSettings/receitaWS.png"
-    alt="Print da Remote Site Settings" 
+    alt="Imagem do Remote Site Settings" 
     width="79%">
 
 ### **7º Conexão da IDE com a org e Criação do projeto**
@@ -188,7 +188,7 @@
 
   <img 
   src="./imagens/conexãoOrgIDE/statusDosProjetos.png"
-  alt="Print do status da conexão do projeto na IDE" 
+  alt="Imagem do status da conexão do projeto na IDE" 
   width="78%">
 
   6- sf org login web --alias andersonbarretodev@resourceful-badger-s0xeok.com --set-default
@@ -196,7 +196,7 @@
 
   <img 
   src="./imagens/conexãoOrgIDE/loginOrg.png"
-  alt="Print de autorização de acesso da IDE na Org" 
+  alt="Imagem de autorização de acesso da IDE na Org" 
   width="78%">
 
   7- sf org open
