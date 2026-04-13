@@ -122,38 +122,38 @@
 
     * Account and contact acesso privado.
 
-    <img 
-        src="./imagens/sharingRules/accountAndContact.png" 
-        alt="Imagem da Configuração de acesso Privado em Accout and Contact" 
-         width="78%">
+        <img 
+            src="./imagens/sharingRules/accountAndContact.png" 
+            alt="Imagem da Restrição de acesso a Campaign" 
+            width="78%">
 
     * Configuração em Account Sharing Rules.
 
-    <img 
-        src="./imagens/sharingRules/accountSharingRules.png" 
-        alt="Imagem da configuração em Account Sharing Rules" 
-        width="78%">
+        <img 
+            src="./imagens/sharingRules/accountSharingRules.png" 
+            alt="Imagem da configuração em Account Sharing Rules" 
+            width="78%">
 
     * Configuração do Role no Usuário Represetante de Vendas.
 
-    <img 
-        src="./imagens/sharingRules/userRoles.png" 
-        alt="Imagem da configuração no item Role no perfil Representante de Vendas" 
-        width="78%">
+        <img 
+            src="./imagens/sharingRules/userRoles.png" 
+            alt="Imagem da configuração no item Role no perfil Representante de Vendas" 
+            width="78%">
 
     * Teste de acesso do Representante de Vedas no Flow.
 
-    <img 
-        src="./imagens/sharingRules/testeRepresentanteVedas.png" 
-        alt="Imagem do teste com o usuário Representante de Vendas no Flow" 
-        width="78%">
+        <img 
+            src="./imagens/sharingRules/testeRepresentanteVedas.png" 
+            alt="Imagem do teste com o usuário Representante de Vendas no Flow" 
+            width="78%">
 
     * Teste de Conta sem acesso usando o Flow.
 
-    <img 
-        src="./imagens/sharingRules/testeContaSemAcesso.png" 
-        alt="Imagem com usuário sem acesso pelo Flow" 
-        width="78%">
+        <img 
+            src="./imagens/sharingRules/testeContaSemAcesso.png" 
+            alt="Imagem com usuário sem acesso pelo Flow" 
+            width="78%">
 
 
 ### **6º Liberar API (ReceitaWS)**
