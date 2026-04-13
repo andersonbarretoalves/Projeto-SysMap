@@ -123,35 +123,35 @@
     * Account and contact acesso privado.
 
         <img 
-            src="./imagens/sharingRules/accountAndContact.png" 
+            src="./imagens/sharingRules/accountAndContact.PNG" 
             alt="Imagem da Restrição de acesso a Campaign" 
             width="78%">
 
     * Configuração em Account Sharing Rules.
 
         <img 
-            src="./imagens/sharingRules/accountSharingRules.png" 
+            src="./imagens/sharingRules/accountSharingRules.PNG" 
             alt="Imagem da configuração em Account Sharing Rules" 
             width="78%">
 
     * Configuração do Role no Usuário Represetante de Vendas.
 
         <img 
-            src="./imagens/sharingRules/userRoles.png" 
+            src="./imagens/sharingRules/userRoles.PNG" 
             alt="Imagem da configuração no item Role no perfil Representante de Vendas" 
             width="78%">
 
     * Teste de acesso do Representante de Vedas no Flow.
 
         <img 
-            src="./imagens/sharingRules/testeRepresentanteVedas.png" 
+            src="./imagens/sharingRules/testeRepresentanteVedas.PNG" 
             alt="Imagem do teste com o usuário Representante de Vendas no Flow" 
             width="78%">
 
     * Teste de Conta sem acesso usando o Flow.
 
         <img 
-            src="./imagens/sharingRules/testeContaSemAcesso.png" 
+            src="./imagens/sharingRules/testeContaSemAcesso.PNG" 
             alt="Imagem com usuário sem acesso pelo Flow" 
             width="78%">
 
