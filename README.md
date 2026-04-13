@@ -32,14 +32,14 @@
 
 <img 
   src="./imagens/imagemDaOrg.png" 
-  alt="Print da Org" 
+  alt="Imagem da Org" 
   width="80%">
 
 ### **2º Criação de Um repositório GitHub com um arquivo Readme.md para a Documentação do projeto e versionamento.**
 
 <img 
   src="./imagens/imagemDoGitHub.png" 
-  alt="Print do GitHub" 
+  alt="Imagem do GitHub" 
   width="80%">
 
 ### **3º Criado um resumo da Apresentação do Projeto.**
@@ -50,45 +50,111 @@
 
 <img 
   src="./imagens/ChecklistInterativo.png" 
-  alt="Print da Cheklist Interativo" 
+  alt="Imagem do Cheklist Interativo" 
   width="80%">
 
-### **4º Criação do perfil, configuração de Permissões.**
+### **4º Criação do perfil, configuração de Permissões e Restrição de Acesso.**
 
 - Criação do perfil de Representante de Vendas.
 
   <img 
     src="./imagens/perfilPermission/representanteDeVendas.png" 
-    alt="Print do Perfil de represetante de vendas" 
+    alt="Imagem do Perfil de represetante de vendas" 
     width="79%">
 
 - Permissão no Objeto Conta.
 
   <img 
     src="./imagens/perfilPermission/permissionObjetoAccount.png" 
-    alt="Print da permissão no objeto conta" 
+    alt="Imagem da permissão no objeto conta" 
     width="79%">
 
   <img 
     src="./imagens/perfilPermission/permissionSetsConta.png" 
-    alt="Print da permissão no objeto conta" 
+    alt="Imagem da permissão no objeto conta no Permission Sets" 
     width="79%">  
-
-
 
 - Permissão no Objeto Contato.
 
   <img 
     src="./imagens/perfilPermission/permissionObjetoContact.png" 
-    alt="Print da permissão no objeto contato" 
+    alt="Imagem da permissão no objeto contato" 
     width="79%">
 
   <img 
     src="./imagens/perfilPermission/permissionSetsContacts.png" 
-    alt="Print da permissão no objeto contato" 
-    width="79%">  
+    alt="Print da permissão no objeto contato no Permission Sets" 
+    width="79%">
 
-### **5º Restringir acesso ao processo de cadastro.**
+- Restrição de Acesso a objetos desnecessários.
+
+    * Oportuniade
+
+        <img 
+            src="./imagens/acessoRestrito/oportunidade.png" 
+            alt="Restrição de acesso a oportunidade" 
+            width="78%">
+
+    * Lead
+
+        <img 
+            src="./imagens/acessoRestrito/leads.png" 
+            alt="Restrição de acesso a Leads" 
+            width="78%">
+
+    * Case
+
+        <img 
+            src="./imagens/acessoRestrito/case.png" 
+            alt="Restrição de acesso a Cases" 
+            width="78%">
+
+    * Campaign
+
+        <img 
+            src="./imagens/acessoRestrito/campaign.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+
+### **5º Compartilhamento.**
+
+- Sharing Rules
+
+    * Account and contact acesso privado.
+
+        <img 
+            src="./imagens/sharingRules/accountAndContact.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+
+    * Configuração do Account Sharing Rules
+
+        <img 
+            src="./imagens/sharingRules/accountSharingRules.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+
+    * Configuração do Role no Usuário Represetante de Vendas
+
+        <img 
+            src="./imagens/sharingRules/userRoles.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+
+    * Teste de acesso do Representante de Vedas no Flow
+
+        <img 
+            src="./imagens/sharingRules/testeRepresentanteVedas.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+
+    * Teste de Conta sem acesso
+
+        <img 
+            src="./imagens/sharingRules/testeContaSemAcesso.png" 
+            alt="Restrição de acesso a Campaign" 
+            width="78%">
+            
 
 ### **6º Liberar API (ReceitaWS)**
 
