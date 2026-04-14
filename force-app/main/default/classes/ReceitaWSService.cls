@@ -41,9 +41,7 @@ public with sharing class ReceitaWSService {
             }
 
             if (res.getStatusCode() != 200) {
-                throw createAuraException(
-                    'Erro na API (' + res.getStatusCode() + ')'
-                );
+                throw createAuraException('Erro ao consultar CNPJ. Tente novamente.');
             }
 
             Map<String, Object> result =
