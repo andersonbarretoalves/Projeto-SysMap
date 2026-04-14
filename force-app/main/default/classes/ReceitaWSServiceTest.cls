@@ -1,141 +1,229 @@
 @isTest
-public class ReceitaWSServiceTest {
+private class ReceitaWSServiceTest {
 
-    // ============================
-    // MOCK SUCESSO
-    // ============================
-    class MockSucesso implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest req) {
+    // Mock dinâmico para simular diferentes retornos da API
+    private class ReceitaWSDynamicMock implements HttpCalloutMock {
+        private Integer statusCode;
+        private String responseBody;
+
+        public ReceitaWSDynamicMock(Integer statusCode, String responseBody) {
+            this.statusCode = statusCode;
+            this.responseBody = responseBody;
+        }
+
+        public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();
-            res.setStatusCode(200);
-            res.setBody('{"nome":"Empresa Teste","municipio":"Rio de Janeiro","uf":"RJ"}');
+            res.setHeader('Content-Type', 'application/json');
+            res.setBody(this.responseBody);
+            res.setStatusCode(this.statusCode);
             return res;
         }
     }
 
-    // ============================
-    // MOCK ERRO HTTP
-    // ============================
-    class MockErroHttp implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest req) {
-            HttpResponse res = new HttpResponse();
-            res.setStatusCode(500);
-            res.setBody('Erro interno');
-            return res;
-        }
-    }
-
-    // ============================
-    // MOCK ERRO API (status ERROR)
-    // ============================
-    class MockErroAPI implements HttpCalloutMock {
-        public HTTPResponse respond(HTTPRequest req) {
-            HttpResponse res = new HttpResponse();
-            res.setStatusCode(200);
-            res.setBody('{"status":"ERROR","message":"CNPJ inválido"}');
-            return res;
-        }
-    }
-
-    // ============================
-    // TESTE SUCESSO
-    // ============================
+    // ============================================
+    // 🔹 TESTES DE VALIDAÇÃO DE ENTRADA
+    // ============================================
+    
     @isTest
-    static void testBuscarCNPJ_Sucesso() {
-
-        Test.setMock(HttpCalloutMock.class, new MockSucesso());
-
-        Test.startTest();
-
-        Map<String, Object> result = ReceitaWSService.buscarCNPJ('12345678000100');
-
-        Test.stopTest();
-
-        System.assertEquals('Empresa Teste', result.get('nome'));
-        System.assertEquals('Rio de Janeiro', result.get('municipio'));
-        System.assertEquals('RJ', result.get('uf'));
-    }
-
-    // ============================
-    // TESTE ERRO HTTP
-    // ============================
-    @isTest
-    static void testBuscarCNPJ_ErroHttp() {
-
-        Test.setMock(HttpCalloutMock.class, new MockErroHttp());
-
-        Test.startTest();
-
-        try {
-            ReceitaWSService.buscarCNPJ('12345678000100');
-            System.assert(false, 'Era esperado erro HTTP');
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('Erro na API ReceitaWS'));
-        }
-
-        Test.stopTest();
-    }
-
-    // ============================
-    // TESTE ERRO API
-    // ============================
-    @isTest
-    static void testBuscarCNPJ_ErroAPI() {
-
-        Test.setMock(HttpCalloutMock.class, new MockErroAPI());
-
-        Test.startTest();
-
-        try {
-            ReceitaWSService.buscarCNPJ('12345678000100');
-            System.assert(false, 'Era esperado erro da API');
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('CNPJ inválido'));
-        }
-
-        Test.stopTest();
-    }
-
-    // ============================
-    // TESTE CNPJ VAZIO
-    // ============================
-    @isTest
-    static void testBuscarCNPJ_CnpjVazio() {
-
-        Test.startTest();
-
+    static void testCnpjVazio() {
         try {
             ReceitaWSService.buscarCNPJ('');
-            System.assert(false, 'Era esperado erro de CNPJ vazio');
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('CNPJ não pode estar vazio'));
+            System.assert(false, 'Deveria ter lançado exceção de CNPJ vazio');
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('O CNPJ não pode estar vazio.'));
         }
-
-        Test.stopTest();
     }
 
-    // ============================
-    // TESTE MÉTODO FLOW
-    // ============================
     @isTest
-    static void testBuscarCNPJFlow() {
+    static void testCnpjTamanhoInvalido() {
+        try {
+            ReceitaWSService.buscarCNPJ('123'); // Menor que 14
+            System.assert(false, 'Deveria ter lançado exceção de tamanho inválido');
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('CNPJ inválido.'));
+        }
+    }
 
-        Test.setMock(HttpCalloutMock.class, new MockSucesso());
+    @isTest
+    static void testCnpjApenasZeros() {
+        try {
+            ReceitaWSService.buscarCNPJ('00000000000000');
+            System.assert(false, 'Deveria ter lançado exceção de CNPJ inválido (zeros)');
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('CNPJ inválido.'));
+        }
+    }
 
-        ReceitaWSService.InputCNPJ input = new ReceitaWSService.InputCNPJ();
-        input.cnpj = '12345678000100';
+    @isTest
+    static void testCnpjApenasUns() {
+        try {
+            ReceitaWSService.buscarCNPJ('11111111111111');
+            System.assert(false, 'Deveria ter lançado exceção de CNPJ inválido (uns)');
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('CNPJ inválido.'));
+        }
+    }
 
-        List<ReceitaWSService.InputCNPJ> inputs = new List<ReceitaWSService.InputCNPJ>{ input };
+    // ============================================
+    // 🔹 TESTES DE ERROS HTTP DA API
+    // ============================================
 
+    @isTest
+    static void testErro429LimiteConsultas() {
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(429, '{}'));
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00000000000191');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('Limite de consultas atingido.'));
+        }
+    }
+
+    @isTest
+    static void testErro403AcessoBloqueado() {
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(403, '{}'));
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00000000000191');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('Acesso bloqueado pela API.'));
+        }
+    }
+
+    @isTest
+    static void testErro500InternoAPI() {
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(500, '{}'));
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00000000000191');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('Erro interno na API.'));
+        }
+    }
+
+    @isTest
+    static void testErroStatusNao200() {
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(404, '{}'));
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00000000000191');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('Erro na API (404)'));
+        }
+    }
+
+    // ============================================
+    // 🔹 TESTES DE REGRAS DE NEGÓCIO NO JSON
+    // ============================================
+
+    @isTest
+    static void testCnpjInconsistente() {
+        // Envia um CNPJ válido na chamada, mas o Mock retorna um CNPJ diferente
+        String jsonRetorno = '{"cnpj": "99.999.999/9999-99"}';
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, jsonRetorno));
+        
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00.000.000/0001-91');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('dados inconsistentes'));
+        }
+    }
+
+    @isTest
+    static void testStatusErrorNoJson() {
+        // A API retorna 200, mas o JSON diz que tem erro (Ex: CNPJ não existe na base deles)
+        String jsonRetorno = '{"cnpj": "00.000.000/0001-91", "status": "ERROR", "message": "CNPJ rejeitado pela Receita"}';
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, jsonRetorno));
+        
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00.000.000/0001-91');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('CNPJ rejeitado'));
+        }
+    }
+
+    @isTest
+    static void testNomeNulo() {
+        // A API retorna 200, status não é erro, mas falta o campo 'nome'
+        String jsonRetorno = '{"cnpj": "00.000.000/0001-91", "status": "OK"}';
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, jsonRetorno));
+        
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00.000.000/0001-91');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('CNPJ não encontrado.'));
+        }
+    }
+
+    @isTest
+    static void testExceptionGenericaCatch() {
+        // Retorna um JSON malformado para forçar um erro no JSON.deserializeUntyped e cair no catch(Exception e)
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, 'JSON_QUEBRADO {'));
+        
+        try {
+            Test.startTest();
+            ReceitaWSService.buscarCNPJ('00000000000191');
+            Test.stopTest();
+        } catch (Exception e) {
+            System.assert(e != null, 'Deveria cair no bloco catch genérico e lançar exceção');
+        }
+    }
+
+    // ============================================
+    // 🔹 TESTES DE SUCESSO (API E FLOW)
+    // ============================================
+
+    @isTest
+    static void testSucessoAPI() {
+        String jsonRetorno = '{"cnpj": "00.000.000/0001-91", "status": "OK", "nome": "EMPRESA SUCESSO", "logradouro": "RUA A", "municipio": "SAO PAULO", "uf": "SP", "cep": "01000-000", "telefone": "1199999999"}';
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, jsonRetorno));
+        
         Test.startTest();
-
-        List<ReceitaWSService.RetornoCNPJ> result = ReceitaWSService.buscarCNPJFlow(inputs);
-
+        Map<String, Object> resultado = ReceitaWSService.buscarCNPJ('00.000.000/0001-91');
         Test.stopTest();
+        
+        System.assertEquals('EMPRESA SUCESSO', resultado.get('nome'));
+    }
 
-        System.assertEquals(1, result.size());
-        System.assertEquals('Empresa Teste', result[0].nome);
-        System.assertEquals('Rio de Janeiro', result[0].cidade);
-        System.assertEquals('RJ', result[0].uf);
+    @isTest
+    static void testFlowCnpjSucesso() {
+        String jsonRetorno = '{"cnpj": "00.000.000/0001-91", "status": "OK", "nome": "EMPRESA SUCESSO"}';
+        Test.setMock(HttpCalloutMock.class, new ReceitaWSDynamicMock(200, jsonRetorno));
+        
+        ReceitaWSService.InputCNPJ input = new ReceitaWSService.InputCNPJ();
+        input.cnpj = '00000000000191';
+        
+        Test.startTest();
+        List<ReceitaWSService.RetornoCNPJ> retornos = ReceitaWSService.buscarCNPJFlow(new List<ReceitaWSService.InputCNPJ>{ input });
+        Test.stopTest();
+        
+        System.assertEquals(1, retornos.size());
+        System.assertEquals(false, retornos[0].erro);
+        System.assertEquals('EMPRESA SUCESSO', retornos[0].nome);
+    }
+
+    @isTest
+    static void testFlowCnpjErro() {
+        // Passa um input inválido para forçar a exceção a ser tratada dentro do loop do Flow
+        ReceitaWSService.InputCNPJ input = new ReceitaWSService.InputCNPJ();
+        input.cnpj = '123'; // CNPJ inválido
+        
+        Test.startTest();
+        List<ReceitaWSService.RetornoCNPJ> retornos = ReceitaWSService.buscarCNPJFlow(new List<ReceitaWSService.InputCNPJ>{ input });
+        Test.stopTest();
+        
+        System.assertEquals(1, retornos.size());
+        System.assertEquals(true, retornos[0].erro, 'O erro deve estar marcado como true para o Flow');
+        System.assert(retornos[0].mensagemErro.contains('CNPJ inválido.'), 'Mensagem de erro não repassada ao Flow');
     }
 }

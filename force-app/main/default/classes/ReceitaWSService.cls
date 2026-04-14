@@ -88,10 +88,15 @@ public with sharing class ReceitaWSService {
 
                 r.nome = (String) result.get('nome');
                 r.logradouro = (String) result.get('logradouro');
+                r.numero = (String) result.get('numero');
+                r.complemento = (String) result.get('complemento');
+                r.bairro = (String) result.get('bairro');
                 r.cidade = (String) result.get('municipio');
                 r.uf = (String) result.get('uf');
                 r.cep = (String) result.get('cep');
                 r.telefone = (String) result.get('telefone');
+                
+                r.status = (String) result.get('situacao');
 
                 r.erro = false;
 
@@ -126,6 +131,15 @@ public with sharing class ReceitaWSService {
         public String logradouro;
 
         @InvocableVariable
+        public String numero;
+
+        @InvocableVariable
+        public String complemento;
+
+        @InvocableVariable
+        public String bairro;
+
+        @InvocableVariable
         public String cidade;
 
         @InvocableVariable
@@ -136,6 +150,9 @@ public with sharing class ReceitaWSService {
 
         @InvocableVariable
         public String telefone;
+
+        @InvocableVariable
+        public String status;
 
         @InvocableVariable
         public Boolean erro;
