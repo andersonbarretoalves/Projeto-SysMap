@@ -32,51 +32,129 @@
 
 <img 
   src="./imagens/imagemDaOrg.png" 
-  alt="Print da Org" 
+  alt="Imagem da Org" 
   width="80%">
 
 ### **2º Criação de Um repositório GitHub com um arquivo Readme.md para a Documentação do projeto e versionamento.**
 
 <img 
   src="./imagens/imagemDoGitHub.png" 
-  alt="Print do GitHub" 
+  alt="Imagem do GitHub" 
   width="80%">
 
 ### **3º Criado um resumo da Apresentação do Projeto.**
 
 - Separado as informações sobre LWC, Flow e Apex para a execução do projeto.
 
-- Apartir da criação do Documento foi solicitado ao ChatGPT a criação de um Checklist Interativo do Projeto.
+- Depois de criar um resumo das informações foi solicitado ao ChatGPT a criação de um Checklist Interativo do Projeto.
 
 <img 
   src="./imagens/ChecklistInterativo.png" 
-  alt="Print da Cheklist Interativo" 
+  alt="Imagem do Cheklist Interativo" 
   width="80%">
 
-### **4º Criação do perfil, configuração de Permissões.**
+### **4º Criação do perfil, configuração de Permissões e Restrição de Acesso.**
 
 - Criação do perfil de Representante de Vendas.
 
   <img 
     src="./imagens/perfilPermission/representanteDeVendas.png" 
-    alt="Print do Perfil de represetante de vendas" 
+    alt="Imagem do Perfil de represetante de vendas" 
     width="79%">
 
 - Permissão no Objeto Conta.
 
   <img 
     src="./imagens/perfilPermission/permissionObjetoAccount.png" 
-    alt="Print da permissão no objeto conta" 
+    alt="Imagem da permissão no objeto conta" 
     width="79%">
+
+  <img 
+    src="./imagens/perfilPermission/permissionSetsConta.png" 
+    alt="Imagem da permissão no objeto conta no Permission Sets" 
+    width="79%">  
 
 - Permissão no Objeto Contato.
 
   <img 
     src="./imagens/perfilPermission/permissionObjetoContact.png" 
-    alt="Print da permissão no objeto contato" 
+    alt="Imagem da permissão no objeto contato" 
     width="79%">
 
-### **5º Restringir acesso ao processo de cadastro.**
+  <img 
+    src="./imagens/perfilPermission/permissionSetsContacts.png" 
+    alt="Imagem da permissão no objeto contato no Permission Sets" 
+    width="79%">
+
+- Restrição de Acesso a objetos desnecessários.
+
+    * Oportuniade
+
+        <img 
+            src="./imagens/acessoRestrito/oportunidade.png" 
+            alt="Imagem da Restrição de acesso a oportunidade" 
+            width="78%">
+
+    * Lead
+
+        <img 
+            src="./imagens/acessoRestrito/leads.png" 
+            alt="Imagem da Restrição de acesso a Leads" 
+            width="78%">
+
+    * Case
+
+        <img 
+            src="./imagens/acessoRestrito/case.png" 
+            alt="Imagem daRestrição de acesso a Cases" 
+            width="78%">
+
+    * Campaign
+
+        <img 
+            src="./imagens/acessoRestrito/campaign.png" 
+            alt="Imagem da Restrição de acesso a Campaign" 
+            width="78%">
+
+### **5º Compartilhamento.**
+
+- Sharing Rules
+
+    * Account and contact acesso privado.
+
+        <img 
+            src="./imagens/sharingRules/accountAndContact.PNG" 
+            alt="Imagem da Restrição de acesso a Campaign" 
+            width="78%">
+
+    * Configuração em Account Sharing Rules.
+
+        <img 
+            src="./imagens/sharingRules/accountSharingRules.PNG" 
+            alt="Imagem da configuração em Account Sharing Rules" 
+            width="78%">
+
+    * Configuração do Role no Usuário Represetante de Vendas.
+
+        <img 
+            src="./imagens/sharingRules/userRoles.PNG" 
+            alt="Imagem da configuração no item Role no perfil Representante de Vendas" 
+            width="78%">
+
+    * Teste de acesso do Representante de Vedas no Flow.
+
+        <img 
+            src="./imagens/sharingRules/testeRepresentanteVedas.PNG" 
+            alt="Imagem do teste com o usuário Representante de Vendas no Flow" 
+            width="78%">
+
+    * Teste de Conta sem acesso usando o Flow.
+
+        <img 
+            src="./imagens/sharingRules/testeContaSemAcesso.PNG" 
+            alt="Imagem com usuário sem acesso pelo Flow" 
+            width="78%">
+
 
 ### **6º Liberar API (ReceitaWS)**
 
@@ -85,7 +163,7 @@
 
   <img 
     src="./imagens/remoteSiteSettings/receitaWS.png"
-    alt="Print da Remote Site Settings" 
+    alt="Imagem do Remote Site Settings" 
     width="79%">
 
 ### **7º Conexão da IDE com a org e Criação do projeto**
@@ -110,7 +188,7 @@
 
   <img 
   src="./imagens/conexãoOrgIDE/statusDosProjetos.png"
-  alt="Print do status da conexão do projeto na IDE" 
+  alt="Imagem do status da conexão do projeto na IDE" 
   width="78%">
 
   6- sf org login web --alias andersonbarretodev@resourceful-badger-s0xeok.com --set-default
@@ -118,7 +196,7 @@
 
   <img 
   src="./imagens/conexãoOrgIDE/loginOrg.png"
-  alt="Print de autorização de acesso da IDE na Org" 
+  alt="Imagem de autorização de acesso da IDE na Org" 
   width="78%">
 
   7- sf org open
@@ -298,4 +376,69 @@ private class ReceitaWSServiceTest {
   src="./imagens/testeDeveloperConsole/teste.PNG" 
   alt="Print do teste no Developer Consoler" 
   width="80%">
+
+### **11º Criação do Flow.**
+   
+* Tela do Flow:
+
+    <img 
+    src="./imagens/Flow/telaDoFlow.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela do Screen:
+
+    <img 
+    src="./imagens/Flow/telaScreen.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela Action - Buscar CNPJ:
+
+    <img 
+    src="./imagens/Flow/buscarCNPJ.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela Toolbox:
+
+    <img 
+    src="./imagens/Flow/telaToolbox.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Print da 1º tela do Flow com o usuário Representante de Vedas:
+
+    <img 
+    src="./imagens/Flow/testUser.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Print da 2º tela do Flow com o usuário Representante de Vedas:
+
+    <img 
+    src="./imagens/Flow/revisarDadosCliente.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tepa do 1º tratamento de erro no Elemento Action "Buscar CNPJ":
+
+    <img 
+    src="./imagens/Flow/primeiroTratamentoDeErro.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tepa do 2º tratamento de erro no Elemento Create Records "Criar Conta":
+
+    <img 
+    src="./imagens/Flow/segundoTratamentoDeErro.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
+
+* Tela de Mensagem - Conta criada com sucesso!:
+
+    <img 
+    src="./imagens/Flow/mensagemSucesso.png" 
+    alt="Print da permissão no objeto contato" 
+    width="79%">
 
