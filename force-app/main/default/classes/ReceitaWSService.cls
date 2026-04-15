@@ -1,17 +1,27 @@
+/**
+ * Classe de serviço para integração com a API ReceitaWS.
+ * Permite a consulta de dados de CNPJ para componentes Lightning (LWC/Aura) e Fluxos (Flows).
+*/
 public with sharing class ReceitaWSService {
 
-    // ============================================
-    // 🔹 MÉTODO PRINCIPAL (API)
-    // ============================================
+    /**
+     * @description Realiza a chamada principal para a API da ReceitaWS.
+     * @param cnpj String contendo o CNPJ a ser consultado (com ou sem máscara).
+     * @return Map<String, Object> contendo os dados retornados pela API.
+     * @throws AuraHandledException Exceção tratada para exibição no front-end.
+    */
     @AuraEnabled(cacheable=false)
     public static Map<String, Object> buscarCNPJ(String cnpj) {
 
+        // 1. Validação inicial: Verifica se o parâmetro está nulo ou vazio
         if (String.isBlank(cnpj)) {
             throw createAuraException('O CNPJ não pode estar vazio.');
         }
 
+        // 2. Limpeza do dado: Remove caracteres especiais (pontos, barras, traços)
         String cleanCnpj = cnpj.replaceAll('[^0-9]', '');
-
+        
+        // 3. Validação de formato: Verifica tamanho e ignora sequências óbvias de teste
         if (cleanCnpj.length() != 14 ||
             cleanCnpj == '00000000000000' ||
             cleanCnpj == '11111111111111') {
@@ -19,6 +29,7 @@ public with sharing class ReceitaWSService {
             throw createAuraException('CNPJ inválido.');
         }
 
+        // chamada HTTP só ocorre após validações de entrada
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint('https://www.receitaws.com.br/v1/cnpj/' + cleanCnpj);
@@ -44,20 +55,23 @@ public with sharing class ReceitaWSService {
                 throw createAuraException('Erro ao consultar CNPJ. Tente novamente.');
             }
 
+            // Converte o corpo do JSON (String) em um Mapa de objetos
             Map<String, Object> result =
                 (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
 
-            // valida se a API retornou o CNPJ correto
+            // 5. Verificação de Consistência: Compara se o CNPJ retornado é o mesmo solicitado
             String cnpjRetornado = String.valueOf(result.get('cnpj')).replaceAll('[^0-9]', '');
 
             if (cnpjRetornado != cleanCnpj) {
                 throw createAuraException('Erro: API retornou dados inconsistentes.');
             }
 
+            // 6. Verificação de Erro no JSON: A API pode retornar status 200 mas com erro no corpo
             if (result.get('status') == 'ERROR') {
                 throw createAuraException((String) result.get('message'));
             }
 
+            // 7. Verificação de Existência: Garante que dados básicos foram encontrados
             if (result.get('nome') == null) {
                 throw createAuraException('CNPJ não encontrado.');
             }
@@ -65,13 +79,17 @@ public with sharing class ReceitaWSService {
             return result;
 
         } catch (Exception e) {
+            // Captura qualquer erro inesperado e repassa como AuraHandledException
             throw createAuraException(e.getMessage());
         }
     }
 
-    // ============================================
-    // 🔹 MÉTODO PARA FLOW
-    // ============================================
+
+    /**
+     * @description Método Invocável para ser utilizado em Salesforce Flows (Fluxos).
+     * @param inputs Lista de inputs contendo o CNPJ (padrão para InvocableMethod).
+     * @return List<RetornoCNPJ> Lista com os dados formatados para o Flow.
+     */
     @InvocableMethod(label='Buscar CNPJ')
     public static List<RetornoCNPJ> buscarCNPJFlow(List<InputCNPJ> inputs) {
 
@@ -82,8 +100,10 @@ public with sharing class ReceitaWSService {
             RetornoCNPJ r = new RetornoCNPJ();
 
             try {
+                // Reaproveita a lógica do método principal para obter os dados
                 Map<String, Object> result = buscarCNPJ(input.cnpj);
 
+                // Mapeia os campos do Map para as variáveis do objeto de retorno
                 r.nome = (String) result.get('nome');
                 r.logradouro = (String) result.get('logradouro');
                 r.numero = (String) result.get('numero');
@@ -99,6 +119,7 @@ public with sharing class ReceitaWSService {
                 r.erro = false;
 
             } catch (Exception e) {
+                // Caso ocorra erro, sinaliza ao Flow e envia a mensagem de erro
                 r.erro = true;
                 r.mensagemErro = e.getMessage();
             }
@@ -109,17 +130,17 @@ public with sharing class ReceitaWSService {
         return lista;
     }
 
-    // ============================================
-    // 🔹 INPUT (FLOW)
-    // ============================================
+    /**
+     * @description Classe Wrapper para entrada de dados no Flow.
+     */
     public class InputCNPJ {
         @InvocableVariable(required=true)
         public String cnpj;
     }
 
-    // ============================================
-    // 🔹 OUTPUT (FLOW)
-    // ============================================
+    /**
+     * @description Classe Wrapper para saída de dados no Flow.
+     */
     public class RetornoCNPJ {
 
         @InvocableVariable
@@ -159,9 +180,11 @@ public with sharing class ReceitaWSService {
         public String mensagemErro;
     }
 
-    // ============================================
-    // 🔹 TRATAMENTO DE ERRO
-    // ============================================
+    /**
+     * @description Método auxiliar para criar exceções que podem ser lidas pelo Lightning.
+     * @param Mensagem de erro amigável.
+     * @return AuraHandledException
+     */
     private static AuraHandledException createAuraException(String message) {
         AuraHandledException e = new AuraHandledException(message);
         e.setMessage(message);
