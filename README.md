@@ -854,10 +854,9 @@ ___
 
 https://www.youtube.com/watch?v=350bOoCkuEc
 
+# 🎥 Link do Vídeo de Apresentação do Projeto
 
-
-
-<video src="./imagens/video/video.mp4" width="1280" height="720" controls></video>
+[![Assista à Demonstração](./imagens/thumbnail.png)](https://www.youtube.com/watch?v=350bOoCkuEc)
 
 
 
