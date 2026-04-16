@@ -847,17 +847,13 @@ ___
 
 ___
 
-<br
+<br>
 
+## 🎥 Link do Vídeo de Apresentação do Projeto
 
-### **Link do Víde de apresentação do Projeto**
-
-https://www.youtube.com/watch?v=350bOoCkuEc
-
-# 🎥 Link do Vídeo de Apresentação do Projeto
-
-[![Assista à Demonstração](./imagens/thumbnail.png)](https://www.youtube.com/watch?v=350bOoCkuEc)
-
+<a href="https://www.youtube.com/watch?v=350bOoCkuEc">
+  <img src="./imagens/video/tb.png" alt="Assista à Demonstração" width="50%">
+</a>
 
 
 
