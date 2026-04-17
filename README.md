@@ -1,34 +1,36 @@
-# **Projeto: SysMap - Bootcamp Salesforce | 7ª Edição**
+# ☁️ Projeto: SysMap - Bootcamp Salesforce | 7ª Edição
 
-## 🧠 **Tecnologias utilizadas**
+![Status](https://img.shields.io/badge/Status-Finalizado-success?style=for-the-badge)
+![Salesforce](https://img.shields.io/badge/Salesforce-00A1E0?style=for-the-badge&logo=salesforce&logoColor=white)
+![Apex](https://img.shields.io/badge/Apex-1798C1?style=for-the-badge&logo=salesforce&logoColor=white)
 
-- Salesforce Apex
-- Flow Builder
+Este repositório documenta a criação e configuração de uma Org Salesforce, incluindo automações e integrações desenvolvidas durante a 7ª Edição do Bootcamp Salesforce da SysMap.
 
-## ⚙️ **Funcionalidades**
+## 👨‍💻 Autor
+**Anderson Alves**
 
-- Validação de dados (ex: CNPJ)
-- Automação com Flow
-- Integração entre Apex e Flow
+---
 
-## 🗂️ **Estrutura do Projeto**
+## 🧠 Tecnologias Utilizadas
+- **Salesforce Apex**
+- **Flow Builder**
+- **Salesforce CLI (SFDX)**
+- **Integração REST (ReceitaWS)**
 
-- Apex Classes
-- Flows
+## ⚙️ Funcionalidades
+- Validação de dados de empresas (CNPJ).
+- Automação de processos utilizando o Flow Builder.
+- Integração fluida entre lógica de back-end (Apex) e automação de front-end (Flow).
 
-## 🎯 **Status**
-
-- Finalizado
-
-## 👨‍💻 **Autor**
-
-- Anderson Alves
+---
 
 <br>
 
 ___
 
 <br>
+
+## 🚀 Passo a Passo do Desenvolvimento
 
 ### **1º Criação de uma Org especifica para a execução do Projeto.**
 
@@ -43,7 +45,9 @@ ___
 
 <br>
 
-### **2º Criação de Um repositório GitHub com um arquivo Readme.md para a Documentação do projeto e versionamento.**
+### **2º Criação do Repositório GitHub**
+
+* Configuração do versionamento e criação deste `README.md` para documentação do projeto.
 
 <img 
   src="./imagens/imagemDoGitHub.png" 
@@ -58,12 +62,12 @@ ___
 
 ### **3º Criação do perfil, configuração de Permissões e Restrição de Acesso.**
 
-- Criação do perfil de Representante de Vendas.
+* Criação do perfil de **Representante de Vendas** com acessos customizados:
 
-  <img 
-    src="./imagens/perfilPermission/representanteDeVendas.png" 
-    alt="Imagem do Perfil de represetante de vendas" 
-    width="79%">
+    <img 
+        src="./imagens/perfilPermission/representanteDeVendas.png" 
+        alt="Imagem do Perfil de represetante de vendas" 
+        width="79%">
 
 - Permissão no Objeto Conta.
 
@@ -240,14 +244,17 @@ ___
 
             * Captura de erros de status interno do JSON da API.
 
-        * Compatibilidade com Flow: Inclui um método anotado com @InvocableMethod que permite a consultores configurarem a busca de CNPJ diretamente em Fluxos, retornando um objeto estruturado com endereço, telefone e situação cadastral.
+        * Compatibilidade com Flow: Inclui um método anotado com `@InvocableMethod` que permite a consultores configurarem a busca de CNPJ diretamente em Fluxos, retornando um objeto estruturado com endereço, telefone e situação cadastral.
 
         * Segurança: Utiliza a palavra-chave with sharing para respeitar as permissões de compartilhamento de registros do usuário atual.
 
         <br>
 
+<details>
+<summary><b>💻 Clique aqui para expandir e ver o código completo da Classe</b></summary>
 
 ```
+apex
 /**
  * Classe de serviço para integração com a API ReceitaWS.
  * Permite a consulta de dados de CNPJ para componentes Lightning (LWC/Aura) e Fluxos (Flows).
@@ -442,6 +449,7 @@ public with sharing class ReceitaWSService {
     }
 }
 ```
+</details>
 
 <br>
 
@@ -471,6 +479,9 @@ ___
         * Integração com Flow: Teste específico para garantir que as variáveis de entrada e saída dos Fluxos estão funcionando conforme o esperado.
 
     <br>
+
+<details>
+<summary><b>💻 Clique aqui para expandir e ver a Classe de Teste</b></summary>
 
 ```
 /**
@@ -701,6 +712,8 @@ private class ReceitaWSServiceTest {
 }
 ```
 
+</details>
+
 <br>
 
 ___
@@ -846,6 +859,156 @@ ___
 <br>
 
 ___
+
+<br>
+
+### **11º Tela do App Funcionando.**
+
+* Tela do App:
+
+    <img 
+        src="./imagens/TelaCenarioSistema/primeiraTela.png" 
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de busca com CNPJ com Mascara:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/primeiraTelaCNPJMascara.png" 
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Retorno dos Dados:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/segundaTela.png" 
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de conta criada com sucesso:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/terceiraTela.png" 
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Account mostrando os dados:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/telaAccount.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+
+    <br>
+
+    * Tela de busca com CNPJ sem Mascara:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/CNPJSemMascara.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Atualização do Cadastro:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/atualizacaoCadastro.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Dados atualizado no Account:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/cadastroAtualizadoAccaunt.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de busca com Erro de Campo Vazio:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/campoVazio.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de busca com Erro com o Campos de CNPJ incompleto:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/cnpjIncompleto.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de busca com Erro de CNPJ Inválido:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/cnpjInvalido.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela com erro de Limite de consultas:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/limiteConsulta.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Erro de CNPJ não encontrado:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/cnpjErrado.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+        <img 
+        src="./imagens/TelaCenarioSistema/erroConsulta.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+    <br>
+
+    * Tela de Cadastro com Status da Empresa Inativa:
+
+        <img 
+        src="./imagens/TelaCenarioSistema/statusCadastralInvalido.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+        <img 
+        src="./imagens/TelaCenarioSistema/statusInvalidoAccount.png"
+        alt="Print da permissão no objeto contato" 
+        width="78%">
+
+
+    <br>
+    
+    <br>
+
+
+## 📣 - **Este projeto marca a consolidação dos conhecimentos adquiridos durante o Bootcamp SysMap Salesforce, refletindo sua aplicação prática em cenários reais. Agradeço à SysMap e a todos os instrutores e colegas que contribuíram para essa jornada de aprendizado.**
+    
+
+<br>
 
 <br>
 
